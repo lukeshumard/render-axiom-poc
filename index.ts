@@ -5,7 +5,24 @@ import { createTerminus, HealthCheck } from '@godaddy/terminus'
 import pinoHttp from 'pino-http'
 
 const app = express()
-const pino = pinoHttp({})
+const pino = pinoHttp({
+  transport: {
+    pipeline: [
+      {
+        target: 'pino-syslog',
+      },
+      {
+        target: 'pino-socket',
+        options: {
+          mode: 'tcp',
+          secure: true,
+          address: process.env.AXIOM_ADDRESS,
+          port: process.env.AXIOM_PORT,
+        }
+      }
+    ]
+  }
+})
 app.use(helmet())
 app.use(pino)
 app.disable('x-powered-by')
