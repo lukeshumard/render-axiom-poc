@@ -1,4 +1,9 @@
 {
+  "name": "render-axiom-poc",
+  "main": "dist/index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "start": "node -r ts-node/register/transpile-only -r dotenv/config index.ts",
     "dev": "nodemon -r dotenv/config index.ts"
